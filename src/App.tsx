@@ -1,25 +1,62 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { RedocStandalone } from "redoc";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <RedocStandalone
+      spec={{
+        info: {
+          title: "User Event API",
+          version: "1.0.0",
+        },
+        description: " User Event API Specification",
+        openapi: "3.0.0",
+        paths: {},
+        components: {
+          messages: {
+            UserSignedIn: {
+              payload: {
+                type: "object",
+                properties: {
+                  id: {
+                    type: "string",
+                    description: "Id of the user",
+                  },
+                },
+              },
+            },
+            UserSignedUp: {
+              payload: {
+                type: "object",
+                properties: {
+                  id: {
+                    type: "string",
+                    description: "Id of the user",
+                  },
+                },
+              },
+            },
+          },
+        },
+        channels: {
+          "user/signedin": {
+            subscribe: {
+              message: {
+                $ref: "#/components/messages/UserSignedIn",
+              },
+            },
+          },
+          "user/signedup": {
+            subscribe: {
+              message: {
+                $ref: "#/components/messages/UserSignedUp",
+              },
+            },
+          },
+        },
+        tags: [],
+      }}
+    />
   );
 }
 
